@@ -8,8 +8,22 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const tweetRouter = require('./routes/tweets');
+const mongoose = require('mongoose')
 
 var app = express();
+
+// connect to mongoDB
+const url = 'mongodb://localhost:27017/ghostr';
+
+mongoose.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', url);
+  }
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
