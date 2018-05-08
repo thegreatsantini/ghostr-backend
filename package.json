@@ -14,7 +14,6 @@
     "express-logger": "0.0.3",
     "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
-    "memorystore": "^1.6.0",
     "mongoose": "^5.0.17",
     "morgan": "~1.9.0",
     "oauth": "^0.9.15",
