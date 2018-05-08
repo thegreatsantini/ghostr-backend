@@ -8,12 +8,12 @@ var inspect       = require('util-inspect');
 var oauth         = require('oauth');
 var morgan        = require('morgan');
 var createError   = require('http-errors');
-var indexRouter   = require('./routes/index');
+var path          = require('path');
+//var indexRouter   = require('./routes/index');
 var usersRouter   = require('./routes/users');
 var authRouter    = require('./routes/auth');
 var tweetRouter   = require('./routes/tweets');
-var path          = require('path');
-var app = express();
+var app           = express();
 
 var consumer = new oauth.OAuth(
     "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token", 
@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 //app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/tweets', tweetRouter);
@@ -91,12 +91,12 @@ app.get('/sessions/callback', function(req, res){
     } else {
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-      res.redirect('/home');
+      res.redirect('/');
     }
   });
 });
 
-app.get('/home', function(req, res){
+app.get('/', function(req, res){
     consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", process.env.ACCESS_TOKEN, process.env.ACCESS_TOKEN_SECRET, function (error, data, response) {
       if (error) {
         console.log(error)
@@ -108,9 +108,9 @@ app.get('/home', function(req, res){
     });
 });
 
-app.get('*', function(req, res){
-    res.redirect('/home');
-});
+// app.get('*', function(req, res){
+//     res.redirect('/');
+// });
 
 app.listen(8080, function() {
   console.log('App runining on port 8080!');
