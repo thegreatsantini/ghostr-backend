@@ -3,22 +3,11 @@ const router = express.Router();
 const cors = require('cors');
 const db = require('../models');
 
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/dejafood');
+
+
 
 /* GET users listing. */
 router.get('/', cors(), function (req, res, next) {
-  // Comment out this line:
-  //res.send('respond with a resource');
-
-  // And insert something like this instead:
-  // res.json([{
-  //   id: 1,
-  //   username: "samsepi0l"
-  // }, {
-  //   id: 2,
-  //   username: "D0loresH4ze"
-  // }]);
   db.User.find(function (err, users) {
     if (err){
       console.log("****************ERROR*******************", err);
