@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+var cors = require('cors');
 
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/dejafood');
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/', cors(), function (req, res, next) {
   // Comment out this line:
   //res.send('respond with a resource');
 

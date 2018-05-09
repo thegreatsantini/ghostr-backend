@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
     "ejs": "~2.5.7",

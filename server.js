@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
   res.locals.session = req.session;
   next();
 });
+app.set('view engine', 'ejs');
 
 
 ///////////////////////////////////////
@@ -45,10 +46,6 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/tweets', tweetRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -91,7 +88,8 @@ app.get('/sessions/callback', function(req, res){
     } else {
       req.session.oauthAccessToken = oauthAccessToken;
       req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-      res.redirect('/');
+      //res.redirect('/');
+      res.redirect('http://localhost:3000/');
     }
   });
 });
@@ -112,12 +110,16 @@ app.get('/', function(req, res){
 //     res.redirect('/');
 // });
 
-app.listen(8080, function() {
-  console.log('App runining on port 8080!');
-});
+// app.listen(8080, function() {
+//   console.log('App runining on port 8080!');
+// });
 
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
 ////////////////////////////////////////////////////
 var http = require('http');
-module.exports = app;
+//module.exports = app;
 var server = http.createServer(app);
-server.listen(4007);
+server.listen(8080);
