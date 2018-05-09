@@ -304,6 +304,7 @@
 ::1 - - [Wed, 09 May 2018 16:47:27 GMT] "GET /fe HTTP/1.1" 200 90 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 ::ffff:127.0.0.1 - - [Wed, 09 May 2018 16:47:33 GMT] "GET /sessions/callback?oauth_token=cpx-dgAAAAAA5_YmAAABY0XM6kQ&oauth_verifier=heNstPL1qw8D11cXzrzco5dC27whV64x HTTP/1.1" 302 46 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 ::ffff:127.0.0.1 - - [Wed, 09 May 2018 16:47:34 GMT] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
+13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 ::1 - - [Wed, 09 May 2018 17:24:26 GMT] "GET /fe HTTP/1.1" 500 131 "http://localhost:3001/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 ::1 - - [Wed, 09 May 2018 17:24:35 GMT] "GET /fe HTTP/1.1" 500 131 "http://localhost:3001/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
 ::1 - - [Wed, 09 May 2018 17:25:28 GMT] "GET /fe HTTP/1.1" 500 131 "http://localhost:3001/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
