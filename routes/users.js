@@ -3,7 +3,6 @@ const router = express.Router();
 var cors = require('cors');
 
 
-const cors = require('cors')
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/dejafood');
 

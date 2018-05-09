@@ -20,18 +20,6 @@ var consumer = new oauth.OAuth(
   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
   process.env.TWITTER_KEY, process.env.TWITTER_SECRET, "1.0A", "http://127.0.0.1:8080/sessions/callback", "HMAC-SHA1");
 
-/* Connect to MongoDB */
-
-const url = 'mongodb://localhost:27017/inkyTweet';
-
-mongoose.connect(url, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    console.log('Connection established to', url);
-  }
-});
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger({ path: "log/express.log" }));
