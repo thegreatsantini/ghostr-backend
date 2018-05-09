@@ -13,7 +13,7 @@ const mongoose = require('mongoose')
 var app = express();
 
 // connect to mongoDB
-const url = 'mongodb://localhost:27017/ghostr';
+const url = 'mongodb://localhost:27017/inkyTweet';
 
 mongoose.connect(url, function (err, db) {
   if (err) {
@@ -59,4 +59,4 @@ app.use(function (err, req, res, next) {
 var http = require('http');
 module.exports = app;
 var server = http.createServer(app);
-server.listen(4007);
+server.listen(8080);
