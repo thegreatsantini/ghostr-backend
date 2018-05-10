@@ -223,6 +223,28 @@ app.post('/auth/twitter', function(req, res, next) {
 }, generateToken, sendToken);
 */
 
+app.get('/api/v1/data', function(req, res) {
+	db.User.find({}, function(err, users) {
+		if (err) { console.log('############## error finding users:\n', err) }
+		let usersIds = [];
+		users.forEach(user => usersIds.push(user.twitterId));
+		usersIds.sort();
+		db.Tweet.find({}, function(error, tweets) {
+			if (error) { console.log('############## error finding tweets:\n', error) }
+			let tweetCategories = [];
+			tweets.forEach(tweet => {
+				//console.log(tweet);
+				tweetCategories.concat(tweet.categories);
+				// for (let i = 0; i < tweet.categories.length; i++) {
+				// 	tweetCategories.push(tweet.categories[i]);
+				// }
+			});
+			res.send({usersIDs: usersIds, categories: tweetCategories});
+		});
+	});
+})
+
+
 // app.get('/auth/twitter', function(req, res) {
 // 	res.send('testing');
 // })
