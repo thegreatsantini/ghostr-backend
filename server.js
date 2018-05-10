@@ -20,7 +20,7 @@ const db = require('./models');
 var jwt = require('jsonwebtoken');
 var passport = require('passport');
 var expressJwt = require('express-jwt');
-var twitterTokenStrategy = require('passport-twitter-token');
+// var twitterTokenStrategy = require('passport-twitter-token');
 var request = require('request');
 
 
@@ -72,20 +72,25 @@ var corsOption = {
 app.use(cors(corsOption));
 
 
-module.exports = function () {
+// module.exports = function () {
 
-  passport.use(new TwitterTokenStrategy({
-      consumerKey: process.env.TWITTER_KEY,
-      consumerSecret: process.env.TWITTER_SECRET,
-      includeEmail: false	//changed from true
-    },
-    function (token, tokenSecret, profile, done) {
-      db.User.upsertTwitterUser(token, tokenSecret, profile, function(err, user) {
-        return done(err, user);
-      });
-    }));
+//   passport.use(new TwitterTokenStrategy({
+//       consumerKey: process.env.TWITTER_KEY,
+//       consumerSecret: process.env.TWITTER_SECRET,
+//       includeEmail: false	//changed from true
+//     },
+//     function (token, tokenSecret, profile, done) {
+//       db.User.upsertTwitterUser(token, tokenSecret, profile, function(err, user) {
+//         return done(err, user);
+//       });
+//     }));
 
-};
+// };
+
+// var User = require('mongoose').model('User');
+var passportConfig = require('./passport');
+passportConfig();
+
 
 var createToken = function(auth) {
   return jwt.sign({
