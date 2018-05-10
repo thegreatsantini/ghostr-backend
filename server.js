@@ -24,10 +24,6 @@ var twitterTokenStrategy = require('passport-twitter-token');
 var request = require('request');
 
 
-// var consumer = new oauth.OAuth(
-//   "https://twitter.com/oauth/request_token", "https://twitter.com/oauth/access_token",
-//   process.env.TWITTER_KEY, process.env.TWITTER_SECRET, "1.0A", "http://127.0.0.1:8080/sessions/callback", "HMAC-SHA1");
-
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 // app.use(logger({ path: "log/express.log" }));
@@ -121,6 +117,7 @@ var authenticate = expressJwt({
     return null;
   }
 });
+
 // http://127.0.0.1/sessions/callback
 app.post('/auth/twitter/reverse', function(req, res){
 	request.post({
@@ -137,12 +134,13 @@ app.post('/auth/twitter/reverse', function(req, res){
       }
 
       var jsonStr = '{ "' + body.replace(/&/g, '", "').replace(/=/g, '": "') + '"}';
+      //console.log('jsonStr:', jsonStr);
       res.send(JSON.parse(jsonStr));
     });
 });
 
 app.post('/auth/twitter', function(req, res, next) {
-	console.log('/auth/twitter')
+	console.log('/auth/twitter');
     request.post({
       url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
       oauth: {
@@ -153,7 +151,7 @@ app.post('/auth/twitter', function(req, res, next) {
       form: { oauth_verifier: req.query.oauth_verifier }
     }, function (err, r, body) {
       if (err) {
-      	console.log('error with auth/twitter\n', err)
+      	console.log('error with auth/twitter\n', err);
         return res.send(500, { message: err.message });
       }
 
@@ -164,8 +162,6 @@ app.post('/auth/twitter', function(req, res, next) {
       req.body['oauth_token'] = parsedBody.oauth_token;
       req.body['oauth_token_secret'] = parsedBody.oauth_token_secret;
       req.body['user_id'] = parsedBody.user_id;
-
-      //db.User.
 
       next();
     });
@@ -181,135 +177,6 @@ app.post('/auth/twitter', function(req, res, next) {
 
       return next();
 }, generateToken, sendToken);
-
-/*
-app.get('/sessions/connect', cors(), function (req, res) {
-  console.log('connect function');
-  consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
-    if (error) {
-      res.status(500).send("Error getting OAuth request token : " + inspect(error));
-    } else {
-      req.session.oauthRequestToken = oauthToken;
-      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-      // console.log("Double check on 2nd step");
-      // console.log("------------------------");
-      // console.log("<<" + req.session.oauthRequestToken);
-      // console.log("<<" + req.session.oauthRequestTokenSecret);
-      res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
-    }
-  });
-});
-
-
-app.get('/sessions/callback', cors(), function (req, res) {
-  // console.log("------------------------");
-  // console.log(">>" + req.session.oauthRequestToken);
-  // console.log(">>" + req.session.oauthRequestTokenSecret);
-  // console.log(">>" + req.query.oauth_verifier);
-  consumer.getOAuthAccessToken(req.query.oauth_token, '', req.query.oauth_verifier, function (error, oauthAccessToken, oauthAccessTokenSecret, results) {
-    if (error) {
-      res.status(500).send("Error getting OAuth access token : " + inspect(error) + "[" + oauthAccessToken + "]" + "[" + oauthAccessTokenSecret + "]" + "[" + inspect(results) + "]");
-    } else {
-      req.session.oauthAccessToken = oauthAccessToken;
-      req.session.oauthAccessTokenSecret = oauthAccessTokenSecret;
-
-      // res.redirect('http://localhost:3000');
-      res.redirect('/');
-    }
-  });
-});
-
-// app.get('/', cors(), function (req, res) {
-//   console.log('trying to remain logged in?');
-//   consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-//     if (error) {
-//       console.log('failed', error)
-//       res.redirect('/sessions/connect');
-//     } else {
-//       var parsedData = JSON.parse(data);
-//       console.log('success twitter remaining logged in', parsedData);
-//       //res.send('You are signed in: ' + inspect(parsedData.screen_name));
-//       res.send(data);
-//     }
-//   });
-// });
-
-app.get('/', cors(), function (req, res) {
-  console.log('trying to remain logged in for FE?');
-  consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-    if (error) {
-      console.log('failed', error);
-      consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
-        if (error) {
-          res.status(500).send("Error getting OAuth request token : " + inspect(error));
-        } else {
-          req.session.oauthRequestToken = oauthToken;
-          req.session.oauthRequestTokenSecret = oauthTokenSecret;
-          // console.log("Double check on 2nd step");
-          // console.log("------------------------");
-          // console.log("<<" + req.session.oauthRequestToken);
-          // console.log("<<" + req.session.oauthRequestTokenSecret);
-          res.send({ redirect: "https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken });
-        }
-      });
-    } else {
-      var parsedData = JSON.parse(data);
-      console.log('success twitter remaining logged in', parsedData);
-      //res.send('You are signed in: ' + inspect(parsedData.screen_name));
-      res.send({ user: parsedData });
-    }
-  });
-});
-
-*/
-
-// app.get('/', cors(), function (req, res) {
-//   console.log('trying to remain logged in for FE?');
-//   if(!req.session.oauthAccessToken){
-//   	consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
-// 	    if (error) {
-// 	      res.status(500).send("Error getting OAuth request token : " + inspect(error));
-// 	    } else {
-// 	      req.session.oauthRequestToken = oauthToken;
-// 	      req.session.oauthRequestTokenSecret = oauthTokenSecret;
-// 	      // console.log("Double check on 2nd step");
-// 	      // console.log("------------------------");
-// 	      // console.log("<<" + req.session.oauthRequestToken);
-// 	      // console.log("<<" + req.session.oauthRequestTokenSecret);
-// 	      // res.redirect("https://twitter.com/oauth/authorize?oauth_token=" + req.session.oauthRequestToken);
-// 	      console.log('doin the thing');
-// 		consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-// 	      if (error) {
-// 	        console.log('failed to log in!', error);
-// 	        return {user: null, message: "doTheThing: Error getting OAuth request token"}
-// 	      } 
-// 	      else {
-// 	        var parsedData = JSON.parse(data);
-// 	        console.log('success twitter remaining logged in', parsedData);
-// 	        return { user: parsedData, message: null };
-// 	      }
-// 	    });
-  		  
-// 	    }
-// 	  });
-//   }
-//   else{
-// 	console.log('doin the thing');
-// 	consumer.get("https://api.twitter.com/1.1/account/verify_credentials.json", req.session.oauthAccessToken, req.session.oauthAccessTokenSecret, function (error, data, response) {
-//       if (error) {
-//         console.log('failed to log in!', error);
-//         return {user: null, message: "doTheThing: Error getting OAuth request token"}
-//       } 
-//       else {
-//         var parsedData = JSON.parse(data);
-//         console.log('success twitter remaining logged in', parsedData);
-//         return { user: parsedData, message: null };
-//       }
-//     });
-//   }
-	    
-// });
-
 
 
 // app.get('/', cors(), function(req, res) {
