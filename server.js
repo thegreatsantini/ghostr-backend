@@ -233,7 +233,8 @@ app.get('/api/v1/data', function(req, res) {
 			if (error) { console.log('############## error finding tweets:\n', error) }
 			let tweetCategories = [];
 			tweets.forEach(tweet => tweetCategories = tweetCategories.concat(tweet.categories));
-			tweetCategories.forEach(item => )
+			tweetCategories = tweetCategories.filter((word, i) => i === tweetCategories.indexOf(word));
+			tweetCategories.sort();
 			res.send({usersIDs: usersIds, categories: tweetCategories});
 		});
 	});
