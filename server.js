@@ -1,7 +1,6 @@
 require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
-var logger = require('express-logger');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var inspect = require('util-inspect');
@@ -22,7 +21,6 @@ var consumer = new oauth.OAuth(
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(logger({ path: "log/express.log" }));
 app.use(cookieParser());
 app.use(session({
   secret: "I'm a secret string",
@@ -64,6 +62,7 @@ app.use(function (err, req, res, next) {
 app.get('/sessions/connect', cors(), function (req, res) {
   consumer.getOAuthRequestToken(function (error, oauthToken, oauthTokenSecret, results) {
     if (error) {
+      console.log('loging in thro twitter')
       res.status(500).send("Error getting OAuth request token : " + inspect(error));
     } else {
       req.session.oauthRequestToken = oauthToken;
