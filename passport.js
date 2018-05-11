@@ -1,8 +1,9 @@
 'use strict';
 
-var passport = require('passport'),
-  TwitterTokenStrategy = require('passport-twitter-token'),
-  db = require('./models');
+var passport = require('passport');
+
+var Strategy = require('passport-twitter').Strategy;
+var db = require('./models');
 
 module.exports = function () {
 
