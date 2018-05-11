@@ -4,8 +4,6 @@ const cors = require('cors');
 const db = require('../models');
 
 
-
-
 /* GET users listing. */
 router.get('/', cors(), function (req, res, next) {
   db.User.find(function (err, users) {
