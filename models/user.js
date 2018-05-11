@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     accessToken: String,
     accessTokenSecret: String,
     twitterId: String,
+    displayName: String,
     reputation: Number,
     subscriptions: [String],
     writtenTweets: [String],

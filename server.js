@@ -47,7 +47,7 @@ app.set('view engine', 'ejs');
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+// app.use('/auth', authRouter);
 app.use('/tweets', tweetRouter);
 
 
@@ -75,43 +75,73 @@ var passportConfig = require('./passport');
 passportConfig();
 
 
-var createToken = function(auth) {
-  return jwt.sign({
-    id: auth.id
-  }, 'my-secret',
-  {
-    expiresIn: 60 * 120
-  });
-};
+// var createToken = function(auth) {
+//   return jwt.sign({
+//     id: auth.id
+//   }, 'my-secret',
+//   {
+//     expiresIn: 60 * 120
+//   });
+// };
 
-var generateToken = function (req, res, next) {
-  req.token = createToken(req.auth);
-  return next();
-};
+// var generateToken = function (req, res, next) {
+//   req.token = createToken(req.auth);
+//   return next();
+// };
 
-var sendToken = function (req, res) {
-  res.setHeader('x-auth-token', req.token);
-  return res.status(200).send(JSON.stringify(req.user));
-};
+// var sendToken = function (req, res) {
+//   res.setHeader('x-auth-token', req.token);
+//   return res.status(200).send(JSON.stringify(req.user));
+// };
 
-//token handling middleware
-var authenticate = expressJwt({
-  secret: 'my-secret',
-  requestProperty: 'auth',
-  getToken: function(req) {
-    if (req.headers['x-auth-token']) {
-      return req.headers['x-auth-token'];
-    }
-    return null;
-  }
+// //token handling middleware
+// var authenticate = expressJwt({
+//   secret: 'my-secret',
+//   requestProperty: 'auth',
+//   getToken: function(req) {
+//     if (req.headers['x-auth-token']) {
+//       return req.headers['x-auth-token'];
+//     }
+//     return null;
+//   }
+// });
+
+
+app.use(require('express-session')({ 
+	secret: 'keyboard cat', 
+	resave: true, 
+	saveUninitialized: true,
+	cookie: {
+		secure: 'auto'
+	}
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// This route checks for the existence of a user in the session
+app.get('/auth/user', (req, res, next) => {
+	if (req.user) {
+		return res.json({ user: req.user })
+	} else {
+    // TODO: Add db lookup logic here if we can't find googleUser in the session
+		return res.json({ user: null })
+	}
 });
 
+app.get('/auth/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
+app.get('/auth/login',
+  passport.authenticate('twitter'));
 
-
-
-
-
+app.get('/auth/return', 
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('http://localhost:3000/');
+});
 
 
 
