@@ -232,13 +232,8 @@ app.get('/api/v1/data', function(req, res) {
 		db.Tweet.find({}, function(error, tweets) {
 			if (error) { console.log('############## error finding tweets:\n', error) }
 			let tweetCategories = [];
-			tweets.forEach(tweet => {
-				//console.log(tweet);
-				tweetCategories.concat(tweet.categories);
-				// for (let i = 0; i < tweet.categories.length; i++) {
-				// 	tweetCategories.push(tweet.categories[i]);
-				// }
-			});
+			tweets.forEach(tweet => tweetCategories = tweetCategories.concat(tweet.categories));
+			tweetCategories.forEach(item => )
 			res.send({usersIDs: usersIds, categories: tweetCategories});
 		});
 	});
