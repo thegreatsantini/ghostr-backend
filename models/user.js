@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     reputation: Number,
     subscriptions: [String],
     writtenTweets: [String],
-    purchasedTweets: [String]  
+    purchasedTweets: [String]
 })
 
 // userSchema.statics.upsertTwitterUser = function(token, tokenSecret, profile, cb) {
