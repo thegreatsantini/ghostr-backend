@@ -1,27 +1,37 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/login', function (req, res, next) {
-    console.log('render login page')
+// This route checks for the existence of a user in the session
+router.get('/user', (req, res, next) => {
+	let userName = '';
+	// console.log(req.user);
+	// if (Object.keys(req.sessionStore.sessions).length === 0 && req.sessionStore.sessions.constructor === Object) {
+	// 	let key = Object.keys(req.sessionStore.sessions)[0];
+	// 	userName = req.sessionStore.sessions[key].replace(/(.+displayName":")(.+)(",".+)/, '$2');
+	// 	console.log('something');
+	// }
+	if (userName != '') {
+		return res.json({ user: userName })
+	} else {
+    // TODO: Add db lookup logic here if we can't find user in the session
+		return res.json({ user: null })
+	}
 });
 
-router.post('/login', function (req, res, next) {
-    console.log('authenticate login credintials and redirect to profile')
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
-router.get('/signup', function (req, res, next) {
-    // *********** Depends on Oauth
-    console.log('render signup page')
-});
+router.get('/login',
+  passport.authenticate('twitter'));
 
-router.post('/signup', function (req, res, next) {
-    // *******8 depends on Oauth
-    console.log('create new user and redirect to profile')
-});
-
-router.get('/logout', function (req, res, next) {
-    console.log('redirect to homepage')
+router.get('/return', 
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+  	// console.log("########################\n",req);
+    res.redirect('http://localhost:3000/');
 });
 
 module.exports = router;

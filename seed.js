@@ -29,32 +29,72 @@ const users_list = [
 	{
 		accessToken: 'String1',
 		accessTokenSecret: 'String1',
-		twitterId: 'String1',
-		reputation: 1,
-		subscriptions: ['userId1', 'userId2', 'userId3'],
+		displayName: 'name1',
+		twitterId: 'TI_1',
+	    reputation: 1,
+	    subscriptions: ['TI_2', 'TI_3'],
+	    writtenTweets: ['1'],
+    	purchasedTweets: ['2','3']
 	},
 	{
 		accessToken: 'String2',
 		accessTokenSecret: 'String2',
-		twitterId: 'String2',
-		reputation: 2,
-		subscriptions: ['userId2', 'userId5', 'userId1'],
+		displayName: 'name2',
+		twitterId: 'TI_2',
+	    reputation: 2,
+	    subscriptions: ['TI_1', 'TI_3', 'TI_4'],
+	    writtenTweets: ['2'],
+    	purchasedTweets: ['1','4']
 	},
 	{
 		accessToken: 'String3',
 		accessTokenSecret: 'String3',
-		twitterId: 'String3',
-		reputation: 3,
-		subscriptions: ['userId2', 'userId4', 'userId8'],
+		displayName: 'name3',
+		twitterId: 'TI_3',
+	    reputation: 3,
+	    subscriptions: ['TI_2'],
+	    writtenTweets: ['2'],
+    	purchasedTweets: ['1','4']
 	},
 	{
 		accessToken: 'String4',
 		accessTokenSecret: 'String4',
-		twitterId: 'String4',
-		reputation: 4,
-		subscriptions: ['userId2', 'userId123', 'userId434'],
+		displayName: 'name4',
+		twitterId: 'TI_4',
+	    reputation: 4,
+	    subscriptions: ['TI_2', 'TI_3'],
+	    writtenTweets: ['4'],
+    	purchasedTweets: ['3']
 	},
 ];
+
+const tweets_list = [
+	{
+		tweet_id: '1',
+	    creator: 'name4',
+	    body: 'String String String',
+	    categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style']
+	},
+	{
+		tweet_id: '2',
+	    creator: 'name4',
+	    body: 'String String String String String String',
+	    categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style','smile','food','instalike','likeforlike','family','travel','fitness','igers','tagsforlikes','follow4follow','nofilter','life','beauty','amazing','instamood','instagram','photography','vscocam','sun','photo','music','beach','followforfollow']
+	},
+	{
+		tweet_id: '3',
+	    creator: 'name1',
+	    body: 'String String String String String String String String String',
+	    categories: ['bestoftheday','sky','ootd','sunset','dog','vsco','l4l','makeup','f4f','foodporn','hair','pretty','swag','cat','model','motivation','girls','baby','party','cool','lol','gym','design','instapic','funny','healthy','night','tflers','yummy']
+	},
+	{
+		tweet_id: '4',
+	    creator: 'name2',
+	    body: 'String',
+	    categories: ['flowers','lifestyle','hot','instafood','wedding','fit','handmade','black','pink','blue','work','workout','blackandwhite','drawing','inspiration','home','holiday','christmas','nyc','london','sea','instacool','goodmorning','iphoneonly']
+	},
+	
+]
 
 
 
