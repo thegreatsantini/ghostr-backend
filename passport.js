@@ -20,13 +20,19 @@ module.exports = function () {
 
   //   Strategies in Passport require a `verify` function, which accept
   //   credentials, and invoke a callback with a user object.
+
+
   passport.use(new Strategy({
     consumerKey: process.env.TWITTER_KEY,
     consumerSecret: process.env.TWITTER_SECRET,
     includeEmail: false,
-    callbackURL: 'http://127.0.0.1:8080/auth/return'
+    callbackURL: 'http://localhost:8080/auth/return'
   },
-    function(accessToken, refreshToken, profile, done) {
+    function(accessToken, tokenSecret, profile, done) {
+      // console.log('accessToken:\n', accessToken)
+      // console.log('tokenSecret:\n', tokenSecret)
+      console.log('profile:\n', profile)
+
       // Find or save the profile
       db.User.findOne({ 'twitterId' : profile.id }, function(err, user) {
         if (err)
@@ -41,7 +47,7 @@ module.exports = function () {
           var newUser = new db.User();
           // set all of the relevant information
           newUser.twitterId   = profile.id;
-          newUser.displayName = profile.displayName;
+          newUser.displayName = profile.username;
 
           // save the user
           newUser.save(function(err) {
@@ -53,6 +59,25 @@ module.exports = function () {
       })
     }
 ));
+
+  // Configure Passport authenticated session persistence.
+  //
+  // In order to restore authentication state across HTTP requests, Passport needs
+  // to serialize users into and deserialize users out of the session.  In a
+  // production-quality application, this would typically be as simple as
+  // supplying the user ID when serializing, and querying the user record by ID
+  // from the database when deserializing.  However, due to the fact that this
+  // example does not have a database, the complete Twitter profile is serialized
+  // and deserialized.
+  passport.serializeUser(function(user, cb) {
+    //console.log("###########################\n",user);
+    cb(null, user);
+  });
+
+  passport.deserializeUser(function(obj, cb) {
+    // console.log("###########################\n",obj);
+    cb(null, obj);
+  });
 
 
 };

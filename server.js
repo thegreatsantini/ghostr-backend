@@ -25,6 +25,7 @@ var request = require('request');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require('cookie-parser')());
 // app.use(bodyParser.json());
 // app.use(logger({ path: "log/express.log" }));
 // app.use(cookieParser());
@@ -34,21 +35,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   saveUninitialized: true
 // }));
 app.use(morgan('dev'));
-app.use(function (req, res, next) {
-  res.locals.session = req.session;
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.locals.session = req.session;
+//   next();
+// });
 app.set('view engine', 'ejs');
 
 ///////////////////////////////////////
 //app.use(express.json());
 //app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use('/', indexRouter);
-app.use('/users', usersRouter);
-// app.use('/auth', authRouter);
-app.use('/tweets', tweetRouter);
 
 
 // error handler
@@ -70,6 +66,12 @@ var corsOption = {
   exposedHeaders: ['x-auth-token']
 };
 app.use(cors(corsOption));
+
+app.use(function(req, res, next) {
+ // before every route, attach the flash messages and current user to res.locals
+ res.locals.currentUser = req.user;
+ next();
+});
 
 var passportConfig = require('./passport');
 passportConfig();
@@ -113,18 +115,48 @@ app.use(require('express-session')({
 	saveUninitialized: true,
 	cookie: {
 		secure: 'auto'
-	}
+	},
+	maxAge: 360*5
 }));
+
+// var session = require('passport');
+// app.use(session({ 
+// 	secret: 'keyboard cat', 
+// 	resave: true, 
+// 	saveUninitialized: true,
+// 	cookie: {
+// 		secure: 'auto'
+// 	},
+// 	maxAge: 360*5
+// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+//app.use(express.cookieSession({ secret: 'tobo!', maxAge: 360*5 }));
+
+
+
+
+
+//app.use('/', indexRouter);
+app.use('/users', usersRouter);
+// app.use('/auth', authRouter);
+app.use('/tweets', tweetRouter);
 
 // This route checks for the existence of a user in the session
 app.get('/auth/user', (req, res, next) => {
-	if (req.user) {
-		return res.json({ user: req.user })
+	let userName = '';
+	if (Object.keys(req.sessionStore.sessions).length === 0 && req.sessionStore.sessions.constructor === Object) {
+		let key = Object.keys(req.sessionStore.sessions)[0];
+		userName = req.sessionStore.sessions[key].replace(/(.+displayName":")(.+)(",".+)/, '$2');
+		console.log('something');
+	}
+	console.log("******************************\n", req.sessionStore.sessions)
+	// console.log('#########################\n', name);
+	if (userName != '') {
+		return res.json({ user: userName })
 	} else {
-    // TODO: Add db lookup logic here if we can't find googleUser in the session
+    // TODO: Add db lookup logic here if we can't find user in the session
 		return res.json({ user: null })
 	}
 });
@@ -140,10 +172,9 @@ app.get('/auth/login',
 app.get('/auth/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
+  	// console.log("########################\n",req);
     res.redirect('http://localhost:3000/');
 });
-
-
 
 
 // // http://127.0.0.1/sessions/callback
