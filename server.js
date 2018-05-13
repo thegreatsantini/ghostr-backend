@@ -7,11 +7,13 @@ var path           = require('path');
 var cors           = require('cors');
 var passport       = require('passport');
 var expressSession = require('express-session');
+// var Twitter        = require('twitter-node-client').Twitter;
 var passportConfig = require('./passport');
 var db             = require('./models');
 var usersRouter    = require('./routes/users');
 var authRouter     = require('./routes/auth');
 var tweetRouter    = require('./routes/tweets');
+// var dataRouter     = require('./routes/data');
 var app = express();
 
 
@@ -49,6 +51,7 @@ app.use(passport.session());
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/tweets', tweetRouter);
+// app.use('api/v1', dataRouter);
 
 app.get('/api/v1/data', function(req, res) {
 	db.User.find({}, function(err, users) {

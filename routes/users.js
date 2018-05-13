@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const cors = require('cors');
+// const cors = require('cors');
 const db = require('../models');
 
 
 /* GET users listing. */
-router.get('/', cors(), function (req, res, next) {
+router.get('/', function (req, res, next) {
   db.User.find(function (err, users) {
     if (err){
       console.log("****************ERROR*******************", err);
     } else {
-    res.send(users);
+      res.send(users);
     }
   })
-
 });
 
 router.post('/', function (req, res) {
@@ -29,20 +28,26 @@ router.delete('/:tweet_id', function (req, res) {
   // will we use this route when another user reserves a ghost tweet 
 })
 
-router.put('/edit', function (req, res) {
-  console.log('edit user profile')
-})
+// router.put('/edit', function (req, res) {
+//   console.log('edit user profile')
+// })
 
 router.get('/:id', function (req, res) {
-  console.log('view other user profiles')
+    db.User.findOne({displayName: req.params.id}, function (err, user) {
+    if (err){
+      console.log("****************ERROR*******************", err);
+    } else {
+      res.send(user);
+    }
+  })
 })
 
-router.put('/:id', function (req, res) {
-  console.log('would we use a put here? i think we can just have add a  array of subscribed users in the model')
-})
+// router.put('/:id', function (req, res) {
+//   console.log('would we use a put here? i think we can just have add a  array of subscribed users in the model')
+// })
 
 router.post('/:id/tweets', function (req, res) {
-  console.log('store a resevered tweet in the user db')
+  console.log('store a reserved tweet in the user db')
 })
 
 router.delete('/:id/tweets/:tweets_id', function (req, res) {
