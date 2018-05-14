@@ -5,95 +5,99 @@ const users_list = [
 	{
 		accessToken: 'String1',
 		accessTokenSecret: 'String1',
-		displayName: 'name1',
+		displayName: '@jingleheimer_schmit',
 		twitterId: 'TI_1',
-	    reputation: 1,
-	    subscriptions: ['TI_2', 'TI_3'],
-	    writtenTweets: ['1'],
-    	purchasedTweets: ['2','3']
+		reputation: 9001,
+		subscriptions: ['TI_2', 'TI_3'],
+		writtenTweets: ['1'],
+		purchasedTweets: ['2','3']
 	},
 	{
 		accessToken: 'String2',
 		accessTokenSecret: 'String2',
 		displayName: 'name2',
 		twitterId: 'TI_2',
-	    reputation: 2,
-	    subscriptions: ['TI_1', 'TI_3', 'TI_4'],
-	    writtenTweets: ['2'],
-    	purchasedTweets: ['1','4']
+		reputation: 2,
+		subscriptions: ['TI_1', 'TI_3', 'TI_4'],
+		writtenTweets: ['2'],
+		purchasedTweets: ['1','4']
 	},
 	{
 		accessToken: 'String3',
 		accessTokenSecret: 'String3',
 		displayName: 'name3',
 		twitterId: 'TI_3',
-	    reputation: 3,
-	    subscriptions: ['TI_2'],
-	    writtenTweets: ['2'],
-    	purchasedTweets: ['1','4']
+		reputation: 3,
+		subscriptions: ['TI_2'],
+		writtenTweets: ['2'],
+		purchasedTweets: ['1','4']
 	},
 	{
 		accessToken: 'String4',
 		accessTokenSecret: 'String4',
 		displayName: 'name4',
 		twitterId: 'TI_4',
-	    reputation: 4,
-	    subscriptions: ['TI_2', 'TI_3'],
-	    writtenTweets: ['4'],
-    	purchasedTweets: ['3']
-	},
+		reputation: 4,
+		subscriptions: ['TI_2', 'TI_3'],
+		writtenTweets: ['4'],
+		purchasedTweets: ['3']
+	}
 ];
 
 const tweets_list = [
 	{
 		tweet_id: '1',
-	    creator: 'name4',
-	    body: 'String String String',
-	    categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style']
+		creator: '@officialjadensmith',
+		reserved: false,
+		body: 'Once You Go In You Always Come Out Alive',
+		categories: ['deep', 'truth']
 	},
 	{
 		tweet_id: '2',
-	    creator: 'name4',
-	    body: 'String String String String String String',
-	    categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style','smile','food','instalike','likeforlike','family','travel','fitness','igers','tagsforlikes','follow4follow','nofilter','life','beauty','amazing','instamood','instagram','photography','vscocam','sun','photo','music','beach','followforfollow']
+		creator: '@officialjadensmith',
+		reserved: false,
+		body: 'People Used To Ask Me What Do You Wanna Be When You Get Older And I Would Say What A Stupid Question The Real Question Is What Am I Right Now',
+		categories: ['savage', 'thinkpeople']
 	},
 	{
 		tweet_id: '3',
-	    creator: 'name1',
-	    body: 'String String String String String String String String String',
-	    categories: ['bestoftheday','sky','ootd','sunset','dog','vsco','l4l','makeup','f4f','foodporn','hair','pretty','swag','cat','model','motivation','girls','baby','party','cool','lol','gym','design','instapic','funny','healthy','night','tflers','yummy']
+		creator: '@officialjadensmith',
+		reserved: false,
+		body: 'I Build Pyramids Constantly',
+		categories: ['flex', 'dowork']
 	},
 	{
 		tweet_id: '4',
-	    creator: 'name2',
-	    body: 'String',
-	    categories: ['flowers','lifestyle','hot','instafood','wedding','fit','handmade','black','pink','blue','work','workout','blackandwhite','drawing','inspiration','home','holiday','christmas','nyc','london','sea','instacool','goodmorning','iphoneonly']
+		creator: '@officialjadensmith',
+		reserved: false,
+		body: 'If A Cup Cake Falls From A Tree How Far Away Will It Be From Down',
+		categories: ['showerthoughts', 'food']
 	},
-	
-]
+	{
+		tweet_id: '5',
+		creator: '@Cain_Unable',
+		reserved: false,
+		body: 'My 4yo just said, "Daddy, why do people make up things that their children have said for social media? Isn\'t it just inherently dishonest & indicative of an inability to construct a compelling narrative themselves?',
+		categories: ['meta', '2real']
+	}
+];
 
 db.User.remove({}, function(err, users){
-  if(err) {
-    console.log('Error occurred in remove', err);
-  } else {
-    console.log('removed all users');
-    db.User.create(users_list, function(err, users){
-      if (err) { return console.log('err', err); }
-      console.log("created", users.length, "users");
-      process.exit();
-    });
-  }
+	if(err) { return console.log('Error occurred in remove', err); }
+	console.log('removed all users');
+	db.User.create(users_list, function(err, users){
+		if (err) { return console.log('err', err); }
+		console.log("created", users.length, "users");
+		process.exit();
+	});
 });
 
 db.Tweet.remove({}, function(err, tweets){
-  if(err) {
-    console.log('Error occurred in remove', err);
-  } else {
-    console.log('removed all tweets');
-    db.Tweet.create(tweets_list, function(err, tweets){
-      if (err) { return console.log('err', err); }
-      console.log("created", tweets.length, "tweets");
-      process.exit();
-    });
-  }
+	if(err) { return console.log('Error occurred in remove', err); }
+	console.log('removed all tweets');
+	db.Tweet.create(tweets_list, function(err, tweets){
+		if (err) { return console.log('err', err); }
+		console.log("created", tweets.length, "tweets");
+		process.exit();
+	});
 });
