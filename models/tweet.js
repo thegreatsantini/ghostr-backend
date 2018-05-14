@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const tweet = new mongoose.Schema({
+const tweetSchema = new mongoose.Schema({
+	tweet_id: String, //delete
     creator: String,
-    owner: String,
+    reserved: Boolean,
     body: String,
+    categories: [String]
 })
 
-
-
-module.exports = mongoose.model('tweet', savedRecipes);
+module.exports = mongoose.model('Tweet', tweetSchema);
