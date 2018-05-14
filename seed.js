@@ -10,17 +10,17 @@ const users_list = [
 		reputation: 9001,
 		subscriptions: ['TI_2', 'TI_3'],
 		writtenTweets: ['1'],
-		purchasedTweets: ['2','3']
+		purchasedTweets: ['2', '3']
 	},
 	{
 		accessToken: 'String2',
 		accessTokenSecret: 'String2',
-		displayName: 'name2',
-		twitterId: 'TI_2',
-		reputation: 2,
-		subscriptions: ['TI_1', 'TI_3', 'TI_4'],
-		writtenTweets: ['2'],
-		purchasedTweets: ['1','4']
+		displayName: '@jingleheimer_schmit',
+		twitterId: 'longnumber',
+		reputation: 9001,
+		subscriptions: ['@officialjadensmith', '@weratedogs', '@fuckjerry'],
+		writtenTweets: ['1', '2', '3', '4'],
+		purchasedTweets: ['4']
 	},
 	{
 		accessToken: 'String3',
@@ -30,7 +30,7 @@ const users_list = [
 		reputation: 3,
 		subscriptions: ['TI_2'],
 		writtenTweets: ['2'],
-		purchasedTweets: ['1','4']
+		purchasedTweets: ['1', '4']
 	},
 	{
 		accessToken: 'String4',
@@ -80,22 +80,29 @@ const tweets_list = [
 		body: 'My 4yo just said, "Daddy, why do people make up things that their children have said for social media? Isn\'t it just inherently dishonest & indicative of an inability to construct a compelling narrative themselves?',
 		categories: ['meta', '2real']
 	}
+	// {
+	// 	tweet_id: '5',
+	// 	creator: '@officialjadensmith',
+	// 	reserved: false,
+	// 	body: 'Don\'t Argue With Anyone About What Color The Sky Is',
+	// 	categories: ['blue', 'tryme']
+	// }
 ];
 
-db.User.remove({}, function(err, users){
-	if(err) { return console.log('Error occurred in remove', err); }
+db.User.remove({}, function (err, users) {
+	if (err) { return console.log('Error occurred in remove', err); }
 	console.log('removed all users');
-	db.User.create(users_list, function(err, users){
+	db.User.create(users_list, function (err, users) {
 		if (err) { return console.log('err', err); }
 		console.log("created", users.length, "users");
 		process.exit();
 	});
 });
 
-db.Tweet.remove({}, function(err, tweets){
-	if(err) { return console.log('Error occurred in remove', err); }
+db.Tweet.remove({}, function (err, tweets) {
+	if (err) { return console.log('Error occurred in remove', err); }
 	console.log('removed all tweets');
-	db.Tweet.create(tweets_list, function(err, tweets){
+	db.Tweet.create(tweets_list, function (err, tweets) {
 		if (err) { return console.log('err', err); }
 		console.log("created", tweets.length, "tweets");
 		process.exit();
