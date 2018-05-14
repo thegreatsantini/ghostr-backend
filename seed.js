@@ -15,12 +15,12 @@ const users_list = [
 	{
 		accessToken: 'String2',
 		accessTokenSecret: 'String2',
-		displayName: 'jiffy',
-		twitterId: 'jiffy',
-		reputation: 2,
+		displayName: '@jingleheimer_schmit',
+		twitterId: 'longnumber',
+		reputation: 9001,
 		subscriptions: ['@officialjadensmith', '@weratedogs', '@fuckjerry'],
 		writtenTweets: ['1', '2', '3', '4'],
-		purchasedTweets: ['If Its Lit, Its Truly Lit']
+		purchasedTweets: ['4']
 	},
 	{
 		accessToken: 'String3',
