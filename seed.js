@@ -1,30 +1,6 @@
 const mongoose = require('mongoose');
 const db = require('./models');
 
-// const tweets_list = [
-// 	{
-// 		creator: 'userId2',
-// 		body: 'String String String',
-// 		categories: ['love', 'instagood', 'photooftheday', 'fashion', 'beautiful', 'happy', 'cute', 'tbt', 'like4like', 'followme', 'picoftheday', 'follow', 'me', 'selfie', 'summer', 'art', 'instadaily', 'friends', 'repost', 'nature', 'girl', 'fun', 'style']
-// 	},
-// 	{
-// 		creator: 'userId223',
-// 		body: 'String String String String String String',
-// 		categories: ['love', 'instagood', 'photooftheday', 'fashion', 'beautiful', 'happy', 'cute', 'tbt', 'like4like', 'followme', 'picoftheday', 'follow', 'me', 'selfie', 'summer', 'art', 'instadaily', 'friends', 'repost', 'nature', 'girl', 'fun', 'style', 'smile', 'food', 'instalike', 'likeforlike', 'family', 'travel', 'fitness', 'igers', 'tagsforlikes', 'follow4follow', 'nofilter', 'life', 'beauty', 'amazing', 'instamood', 'instagram', 'photography', 'vscocam', 'sun', 'photo', 'music', 'beach', 'followforfollow']
-// 	},
-// 	{
-// 		creator: 'userId21231',
-// 		body: 'String String String String String String String String String',
-// 		categories: ['bestoftheday', 'sky', 'ootd', 'sunset', 'dog', 'vsco', 'l4l', 'makeup', 'f4f', 'foodporn', 'hair', 'pretty', 'swag', 'cat', 'model', 'motivation', 'girls', 'baby', 'party', 'cool', 'lol', 'gym', 'design', 'instapic', 'funny', 'healthy', 'night', 'tflers', 'yummy']
-// 	},
-// 	{
-// 		creator: 'userId123',
-// 		body: 'String',
-// 		categories: ['flowers', 'lifestyle', 'hot', 'instafood', 'wedding', 'fit', 'handmade', 'black', 'pink', 'blue', 'work', 'workout', 'blackandwhite', 'drawing', 'inspiration', 'home', 'holiday', 'christmas', 'nyc', 'london', 'sea', 'instacool', 'goodmorning', 'iphoneonly']
-// 	},
-
-// ]
-
 const users_list = [
 	{
 		accessToken: 'String1',
@@ -34,17 +10,17 @@ const users_list = [
 		reputation: 1,
 		subscriptions: ['TI_2', 'TI_3'],
 		writtenTweets: ['1'],
-		purchasedTweets: ['2','3']
+		purchasedTweets: ['2', '3']
 	},
 	{
 		accessToken: 'String2',
 		accessTokenSecret: 'String2',
-		displayName: 'name2',
-		twitterId: 'TI_2',
+		displayName: 'jiffy',
+		twitterId: 'jiffy',
 		reputation: 2,
-		subscriptions: ['TI_1', 'TI_3', 'TI_4'],
-		writtenTweets: ['2'],
-		purchasedTweets: ['1','4']
+		subscriptions: ['@officialjadensmith', '@weratedogs', '@fuckjerry'],
+		writtenTweets: ['1', '2', '3', '4'],
+		purchasedTweets: ['If Its Lit, Its Truly Lit']
 	},
 	{
 		accessToken: 'String3',
@@ -54,7 +30,7 @@ const users_list = [
 		reputation: 3,
 		subscriptions: ['TI_2'],
 		writtenTweets: ['2'],
-		purchasedTweets: ['1','4']
+		purchasedTweets: ['1', '4']
 	},
 	{
 		accessToken: 'String4',
@@ -71,48 +47,55 @@ const users_list = [
 const tweets_list = [
 	{
 		tweet_id: '1',
-		creator: 'name4',
+		creator: '@officialjadensmith',
 		reserved: false,
-		body: 'String String String',
-		categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style']
+		body: 'Once You Go In You Always Come Out Alive',
+		categories: ['deep', 'truth']
 	},
 	{
 		tweet_id: '2',
-		creator: 'name4',
+		creator: '@officialjadensmith',
 		reserved: false,
-		body: 'String String String String String String',
-		categories: ['love','instagood','photooftheday','fashion','beautiful','happy','cute','tbt','like4like','followme','picoftheday','follow','me','selfie','summer','art','instadaily','friends','repost','nature','girl','fun','style','smile','food','instalike','likeforlike','family','travel','fitness','igers','tagsforlikes','follow4follow','nofilter','life','beauty','amazing','instamood','instagram','photography','vscocam','sun','photo','music','beach','followforfollow']
+		body: 'People Used To Ask Me What Do You Wanna Be When You Get Older And I Would Say What A Stupid Question The Real Question Is What Am I Right Now',
+		categories: ['savage', 'thinkpeople']
 	},
 	{
 		tweet_id: '3',
-		creator: 'name1',
+		creator: '@officialjadensmith',
 		reserved: false,
-		body: 'String String String String String String String String String',
-		categories: ['bestoftheday','sky','ootd','sunset','dog','vsco','l4l','makeup','f4f','foodporn','hair','pretty','swag','cat','model','motivation','girls','baby','party','cool','lol','gym','design','instapic','funny','healthy','night','tflers','yummy']
+		body: 'I Build Pyramids Constantly',
+		categories: ['flex', 'dowork']
 	},
 	{
 		tweet_id: '4',
-		creator: 'name2',
+		creator: '@officialjadensmith',
 		reserved: false,
-		body: 'String',
-		categories: ['flowers','lifestyle','hot','instafood','wedding','fit','handmade','black','pink','blue','work','workout','blackandwhite','drawing','inspiration','home','holiday','christmas','nyc','london','sea','instacool','goodmorning','iphoneonly']
+		body: 'If A Cup Cake Falls From A Tree How Far Away Will It Be From Down',
+		categories: ['showerthoughts', 'food']
 	}
+	// {
+	// 	tweet_id: '5',
+	// 	creator: '@officialjadensmith',
+	// 	reserved: false,
+	// 	body: 'Don\'t Argue With Anyone About What Color The Sky Is',
+	// 	categories: ['blue', 'tryme']
+	// }
 ];
 
-db.User.remove({}, function(err, users){
-	if(err) { return console.log('Error occurred in remove', err); }
+db.User.remove({}, function (err, users) {
+	if (err) { return console.log('Error occurred in remove', err); }
 	console.log('removed all users');
-	db.User.create(users_list, function(err, users){
+	db.User.create(users_list, function (err, users) {
 		if (err) { return console.log('err', err); }
 		console.log("created", users.length, "users");
 		process.exit();
 	});
 });
 
-db.Tweet.remove({}, function(err, tweets){
-	if(err) { return console.log('Error occurred in remove', err); }
+db.Tweet.remove({}, function (err, tweets) {
+	if (err) { return console.log('Error occurred in remove', err); }
 	console.log('removed all tweets');
-	db.Tweet.create(tweets_list, function(err, tweets){
+	db.Tweet.create(tweets_list, function (err, tweets) {
 		if (err) { return console.log('err', err); }
 		console.log("created", tweets.length, "tweets");
 		process.exit();

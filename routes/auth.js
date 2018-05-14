@@ -5,8 +5,10 @@ const db = require('../models')
 // This route checks for the existence of a user in the session
 router.get('/user', (req, res, next) => {
 	// let userName = '';
-	db.users.find({'displayName': 'name2'}, function(req, res) {
-		res.json(res)
+	console.log('1',req.body.id)
+	console.log('2',req.body.params)
+	db.User.findOne({'displayName': 'name2'}, function(err, user) {
+		res.json(user)
 	})
 	// console.log(req.user);
 	// if (Object.keys(req.sessionStore.sessions).length === 0 && req.sessionStore.sessions.constructor === Object) {

@@ -54,7 +54,7 @@ module.exports = function () {
   });
 
   passport.deserializeUser(function(id, done) {
-    user.findById(id, function(err, user) {
+    db.User.findById(id, function(err, user) {
       if (err) { return console.log('########## error deserializing user:\n', err)}
       console.log('######## no im not serial:\n', user);
       done(err, user);
