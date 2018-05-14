@@ -61,6 +61,7 @@ passport.deserializeUser(function(id, done) {
     }
     console.log('######## Success deserialize:\n', user);
     done(null, user);
+
   });
 });
 
