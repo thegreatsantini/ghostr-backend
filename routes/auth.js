@@ -4,19 +4,13 @@ var router = express.Router();
 
 // This route checks for the existence of a user in the session
 router.get('/user', (req, res, next) => {
-	let userName = '';
-	// console.log(req.user);
+	console.log('user is ', req.user);
 	// if (Object.keys(req.sessionStore.sessions).length === 0 && req.sessionStore.sessions.constructor === Object) {
 	// 	let key = Object.keys(req.sessionStore.sessions)[0];
 	// 	userName = req.sessionStore.sessions[key].replace(/(.+displayName":")(.+)(",".+)/, '$2');
 	// 	console.log('something');
 	// }
-	if (userName != '') {
-		return res.json({ user: userName })
-	} else {
-    // TODO: Add db lookup logic here if we can't find user in the session
-		return res.json({ user: null })
-	}
+	res.json({ user: req.user });
 });
 
 router.get('/logout', function(req, res) {
@@ -25,7 +19,7 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/login',
-  passport.authenticate('twitter'));
+  passport.authenticate('twitter', { session: true }));
 
 router.get('/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),

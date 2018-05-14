@@ -5,7 +5,7 @@ var cookieParser   = require('cookie-parser');
 var morgan         = require('morgan');
 var path           = require('path');
 var cors           = require('cors');
-var passport       = require('passport');
+//var passport       = require('passport');
 var expressSession = require('express-session');
 // var Twitter        = require('twitter-node-client').Twitter;
 var passportConfig = require('./passport');
@@ -17,16 +17,10 @@ var profileRouter  = require('./routes/profile');
 var app = express();
 
 
-passportConfig();
-app.set('view engine', 'ejs');
+//passportConfig();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
-app.use(function (req, res, next) {
-  res.locals.session = req.session;
-  // console.log('res.locals:\n',res.locals);
-  next();
-});
 
 // enable cors
 app.use(cors({
@@ -36,16 +30,12 @@ app.use(cors({
   exposedHeaders: ['x-auth-token']
 }));
 app.use(expressSession({ 
-	secret: 'keyboard cat', 
+	secret: process.env.SESSION_SECRET, 
 	resave: true, 
-	saveUninitialized: true,
-	cookie: {
-		secure: false //'auto'
-	},
-	maxAge: 360*5
+	saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passportConfig.initialize());
+app.use(passportConfig.session());
 
 
 app.use('/users', usersRouter);
