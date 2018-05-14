@@ -1,27 +1,25 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
-
-/* GET home page. */
-router.get('/login', function (req, res, next) {
-    console.log('render login page')
+const db = require('../models')
+// This route checks for the existence of a user in the session
+router.get('/user', (req, res, next) => {
+	// console.log('user is ', req.user);
+	res.json({ user: req.user });
 });
 
-router.post('/login', function (req, res, next) {
-    console.log('authenticate login credintials and redirect to profile')
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
-router.get('/signup', function (req, res, next) {
-    // *********** Depends on Oauth
-    console.log('render signup page')
-});
+router.get('/login',
+  passport.authenticate('twitter', { session: true }));
 
-router.post('/signup', function (req, res, next) {
-    // *******8 depends on Oauth
-    console.log('create new user and redirect to profile')
-});
-
-router.get('/logout', function (req, res, next) {
-    console.log('redirect to homepage')
+router.get('/return', 
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect(process.env.FRONTEND_URL + 'profile');
 });
 
 module.exports = router;
