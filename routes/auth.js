@@ -5,11 +5,6 @@ const db = require('../models')
 // This route checks for the existence of a user in the session
 router.get('/user', (req, res, next) => {
 	console.log('user is ', req.user);
-	// if (Object.keys(req.sessionStore.sessions).length === 0 && req.sessionStore.sessions.constructor === Object) {
-	// 	let key = Object.keys(req.sessionStore.sessions)[0];
-	// 	userName = req.sessionStore.sessions[key].replace(/(.+displayName":")(.+)(",".+)/, '$2');
-	// 	console.log('something');
-	// }
 	res.json({ user: req.user });
 });
 
@@ -24,8 +19,7 @@ router.get('/login',
 router.get('/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
-  	// console.log("########################\n",req);
-    res.redirect('http://localhost:3000/');
+    res.redirect(process.env.FRONTEND_URL + 'profile');
 });
 
 module.exports = router;
