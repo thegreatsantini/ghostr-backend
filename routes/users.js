@@ -14,8 +14,8 @@ const db = require('../models');
 
 // view writer's channel
 router.get('/:id', function (req, res) {
-  console.log('this is what ran',req.params.id)
-    db.User.findOne({displayName: req.params.id}, function (err, user) {
+  //if currently logged in user is entered as id, redirect to /profile
+  db.User.findOne({displayName: req.params.id}, function (err, user) {
     if (err) { return console.log("****************ERROR*******************", err); }
       //add logic for taking user document and checking if their id is in currently logged in user, if not or if no user is logged in, only send first 2-4 tweets and a count of rest of the tweets you could see if logged in
       console.log(user)

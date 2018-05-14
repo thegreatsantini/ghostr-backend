@@ -16,7 +16,12 @@ router.get('/:id', function (req, res) {
 			db.Tweet.find({"tweet_id" : {"$in" : user.purchasedTweets}}, function(errorPurchased, purchasedTweets) {
 				//change to _id and ObjectId 
 				if (errorPurchased) { return console.log("****************ERROR*******************\n", errorPurchased); }
-				res.send({writtenTweets: writtenTweets, purchasedTweets: purchasedTweets});
+				db.User.find({subscriptions: user.twitterId}, function(errorSubs, users) {
+					if (errorSubs) { return console.log("****************ERROR*******************\n", errorSubs); }
+					let followers = [];
+					users.forEach(singleUser => followers.push(singleUser.displayName));
+					res.send({writtenTweets: writtenTweets, purchasedTweets: purchasedTweets, followers: followers});
+				});
 			});
 		});
 	});
@@ -72,6 +77,18 @@ router.post('/:tweet_id', function (req, res){ //change to route '/'
 	});
 	res.send(newTweet);
 });
+
+// populate tweet in preparation to pos to twitter
+router.get('/post/:tweet_id', function (req, res) {
+	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) {
+		res.send(tweet);
+	});
+});
+
+// // post to twitter
+// router.post('/post/:tweet_id', function (req, res) {
+
+// });
 
 
 module.exports = router;

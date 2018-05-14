@@ -5,9 +5,9 @@ const users_list = [
 	{
 		accessToken: 'String1',
 		accessTokenSecret: 'String1',
-		displayName: 'name1',
+		displayName: '@jingleheimer_schmit',
 		twitterId: 'TI_1',
-		reputation: 1,
+		reputation: 9001,
 		subscriptions: ['TI_2', 'TI_3'],
 		writtenTweets: ['1'],
 		purchasedTweets: ['2', '3']
@@ -72,6 +72,13 @@ const tweets_list = [
 		reserved: false,
 		body: 'If A Cup Cake Falls From A Tree How Far Away Will It Be From Down',
 		categories: ['showerthoughts', 'food']
+	},
+	{
+		tweet_id: '5',
+		creator: '@Cain_Unable',
+		reserved: false,
+		body: 'My 4yo just said, "Daddy, why do people make up things that their children have said for social media? Isn\'t it just inherently dishonest & indicative of an inability to construct a compelling narrative themselves?',
+		categories: ['meta', '2real']
 	}
 	// {
 	// 	tweet_id: '5',
