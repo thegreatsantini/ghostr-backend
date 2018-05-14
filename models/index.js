@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/inkytweet', {useMongoClient: true});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/inkytweet');
 
-module.exports.Tweet = require("./Tweet");
-module.exports.User = require("./User");
+module.exports.Tweet = require("./tweet");
+module.exports.User = require("./user");
