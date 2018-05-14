@@ -5,9 +5,7 @@ var cookieParser   = require('cookie-parser');
 var morgan         = require('morgan');
 var path           = require('path');
 var cors           = require('cors');
-//var passport       = require('passport');
 var expressSession = require('express-session');
-// var Twitter        = require('twitter-node-client').Twitter;
 var passportConfig = require('./passport');
 var db             = require('./models');
 var usersRouter    = require('./routes/users');
@@ -17,7 +15,6 @@ var profileRouter  = require('./routes/profile');
 var app = express();
 
 
-//passportConfig();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
@@ -29,11 +26,13 @@ app.use(cors({
   credentials: true,
   exposedHeaders: ['x-auth-token']
 }));
+
 app.use(expressSession({ 
 	secret: process.env.SESSION_SECRET, 
 	resave: true, 
 	saveUninitialized: true
 }));
+
 app.use(passportConfig.initialize());
 app.use(passportConfig.session());
 
@@ -42,6 +41,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 // app.use('api/v1', dataRouter);
+
 
 app.get('/api/v1/data', function(req, res) {
 	db.User.find({}, function(err, users) {
@@ -64,6 +64,6 @@ app.get('*', function(req, res){
     res.send('404');
 });
 
-app.listen(8080, function() {
+app.listen(process.env.PORT || 8080, function() {
 	console.log('Listening on port 8080');
 });
