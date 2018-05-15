@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
-// if (process.env.NODE_ENV == "production") {
-//   mongoose.connect(process.env.MLAB_URL)
-// } else {
-//   mongoose.connect('mongodb://localhost/');
-// }
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/inkytweet');
 
-mongoose.connect('mongodb://localhost:27017/inkytweet');
-
-module.exports.Tweet = require("./Tweet");
-module.exports.User = require("./User");
+module.exports.Tweet = require("./tweet");
+module.exports.User = require("./user");
