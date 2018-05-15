@@ -1,4 +1,3 @@
-//'use strict';
 require('dotenv').config();
 var express  = require('express');
 var passport = require('passport');
@@ -13,9 +12,7 @@ passport.use(new Strategy({
     callbackURL: process.env.BASE_URL + '/auth/return'
   },
     function(accessToken, tokenSecret, profile, done) {
-      // console.log('accessToken:\n', accessToken)
-      // console.log('tokenSecret:\n', tokenSecret)
-      // console.log('profile:\n', profile)
+      console.log('profile:\n', profile)
       
       // Find or save the profile
       db.User.findOne({ 'twitterId' : profile.id }, function(err, user) {
@@ -34,7 +31,6 @@ passport.use(new Strategy({
           newUser.handle = profile.username;
           newUser.reputation = Math.floor(profile._json.followers_count / profile._json.statuses_count);
           newUser.pic = profile._json.profile_image_url;
-          // save the user
           newUser.save(function(err) {
             if (err)
               throw err;
@@ -55,7 +51,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   // console.log('####### deserializing user!');
   db.User.findById(id, function(err, user) {
-    //console.log('deserialize callback func:', err, user);
+    console.log('deserialize callback func:', err, user);
     if (err) { 
       console.log('########## error deserializing user:\n', err);
       done(err, null);
