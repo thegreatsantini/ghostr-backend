@@ -3,7 +3,7 @@ const db = require('./models');
 
 const users_list = [
 	{
-		displayName: '@jingleheimer_schmit',
+		handle: 'jingleheimer_schmit',
 		twitterId: 'TI_1',
 		reputation: 9001,
 		subscriptions: ['TI_2', 'TI_3'],
@@ -11,7 +11,7 @@ const users_list = [
 		purchasedTweets: ['2', '3']
 	},
 	{
-		displayName: '@jingleheimer_schmit',
+		handle: 'jingleheimer_schmit',
 		twitterId: 'longnumber',
 		reputation: 9001,
 		subscriptions: ['@officialjadensmith', '@weratedogs', '@fuckjerry'],
@@ -19,7 +19,7 @@ const users_list = [
 		purchasedTweets: ['4']
 	},
 	{
-		displayName: 'name3',
+		handle: 'name3',
 		twitterId: 'TI_3',
 		reputation: 3,
 		subscriptions: ['TI_2'],
@@ -27,7 +27,7 @@ const users_list = [
 		purchasedTweets: ['1', '4']
 	},
 	{
-		displayName: 'name4',
+		handle: 'name4',
 		twitterId: 'TI_4',
 		reputation: 4,
 		subscriptions: ['TI_2', 'TI_3'],
@@ -39,35 +39,35 @@ const users_list = [
 const tweets_list = [
 	{
 		tweet_id: '1',
-		creator: '@officialjadensmith',
+		creator: 'officialjadensmith',
 		reserved: false,
 		body: 'Once You Go In You Always Come Out Alive',
 		categories: ['deep', 'truth']
 	},
 	{
 		tweet_id: '2',
-		creator: '@officialjadensmith',
+		creator: 'officialjadensmith',
 		reserved: false,
 		body: 'People Used To Ask Me What Do You Wanna Be When You Get Older And I Would Say What A Stupid Question The Real Question Is What Am I Right Now',
 		categories: ['savage', 'thinkpeople']
 	},
 	{
 		tweet_id: '3',
-		creator: '@officialjadensmith',
+		creator: 'officialjadensmith',
 		reserved: false,
 		body: 'I Build Pyramids Constantly',
 		categories: ['flex', 'dowork']
 	},
 	{
 		tweet_id: '4',
-		creator: '@officialjadensmith',
+		creator: 'officialjadensmith',
 		reserved: false,
 		body: 'If A Cup Cake Falls From A Tree How Far Away Will It Be From Down',
 		categories: ['showerthoughts', 'food']
 	},
 	{
 		tweet_id: '5',
-		creator: '@Cain_Unable',
+		creator: 'Cain_Unable',
 		reserved: false,
 		body: 'My 4yo just said, "Daddy, why do people make up things that their children have said for social media? Isn\'t it just inherently dishonest & indicative of an inability to construct a compelling narrative themselves?',
 		categories: ['meta', '2real']

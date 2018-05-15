@@ -4,13 +4,13 @@ const router = express.Router();
 const db = require('../models');
 
 
-// /* GET users listing. */
-// router.get('/', function (req, res, next) {
-//   db.User.find(function (err, users) {
-//     if (err) { return console.log("****************ERROR*******************", err); }
-//     res.send(users);
-//   });
-// });
+/* GET users listing. */
+router.get('/', function (req, res) {
+  db.User.find(function (err, users) {
+    if (err) { return console.log("****************ERROR*******************", err); }
+    res.send(users);
+  });
+});
 
 // view writer's channel
 router.get('/:id', function (req, res) {
