@@ -49,7 +49,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('####### deserializing user!');
+  // console.log('####### deserializing user!');
   db.User.findById(id, function(err, user) {
     console.log('deserialize callback func:', err, user);
     if (err) { 
