@@ -31,8 +31,9 @@ passport.use(new Strategy({
           var newUser = new db.User();
           // set all of the relevant information
           newUser.twitterId   = profile.id;
-          newUser.displayName = profile.username;
-
+          newUser.handle = profile.username;
+          newUser.reputation = Math.floor(profile._json.followers_count / profile._json.statuses_count);
+          newUser.pic = profile._json.profile_image_url;
           // save the user
           newUser.save(function(err) {
             if (err)
@@ -52,7 +53,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('####### deserializing user!');
+  // console.log('####### deserializing user!');
   db.User.findById(id, function(err, user) {
     //console.log('deserialize callback func:', err, user);
     if (err) { 

@@ -64,12 +64,13 @@ router.delete('/:tweet_id', function (req, res){
 });
 
 // write new tweet
-router.post('/:tweet_id', function (req, res){ //change to route '/'
-	let body = req.body.testing.replace(/(\s#\w+,?)/g, '');
-	let categories = req.body.testing.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
+router.post('/', function (req, res){ //change to route '/'
+	let message = Object.keys(req.body)[0]
+	let body = message.replace(/(\s#\w+,?)/g, '');
+	console.log('******************', message)
+	let categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
 	var newTweet = new db.Tweet();
-	newTweet.tweet_id = req.params.tweet_id; //delete tweet_id from model
-	newTweet.creator = 'name1'; //change to currently logged in user from auth/sessions
+	newTweet.creator = req.user.handle; //change to currently logged in user from auth/sessions
 	newTweet.body = body;
 	newTweet.categories = categories;
 	newTweet.save(function(err) {
