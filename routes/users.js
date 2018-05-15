@@ -19,8 +19,12 @@ router.get('/:id', function (req, res) {
   db.User.findOne({handle: req.params.id}, function (err, user) {
     if (err) { return console.log("****************ERROR*******************", err); }
       //add logic for taking user document and checking if their id is in currently logged in user, if not or if no user is logged in, only send first 2-4 tweets and a count of rest of the tweets you could see if logged in
-      console.log(user)
-    res.send(user);
+      // console.log(user)
+      db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
+        if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
+        console.log(writtenTweets);
+        res.send({user: user, writtenTweets: writtenTweets});
+      });
   });
 });
 

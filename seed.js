@@ -11,15 +11,15 @@ const users_list = [
 		purchasedTweets: ['2', '3']
 	},
 	{
-		handle: 'jingleheimer_schmit',
+		handle: 'Shlomo',
 		twitterId: 'longnumber',
-		reputation: 9001,
+		reputation: 150,
 		subscriptions: ['@officialjadensmith', '@weratedogs', '@fuckjerry'],
 		writtenTweets: ['1', '2', '3', '4'],
 		purchasedTweets: ['4']
 	},
 	{
-		handle: 'name3',
+		handle: 'officialjadensmith',
 		twitterId: 'TI_3',
 		reputation: 3,
 		subscriptions: ['TI_2'],
@@ -27,7 +27,7 @@ const users_list = [
 		purchasedTweets: ['1', '4']
 	},
 	{
-		handle: 'name4',
+		handle: 'Cain_Unable',
 		twitterId: 'TI_4',
 		reputation: 4,
 		subscriptions: ['TI_2', 'TI_3'],
