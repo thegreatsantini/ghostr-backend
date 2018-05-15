@@ -8,6 +8,7 @@ const db = require('../models');
 router.get('/', function (req, res) {
   db.User.find(function (err, users) {
     if (err) { return console.log("****************ERROR*******************", err); }
+    console.log(users);
     res.send(users);
   });
 });

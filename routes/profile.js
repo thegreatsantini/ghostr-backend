@@ -65,10 +65,14 @@ router.delete('/:tweet_id', function (req, res){
 
 // write new tweet
 router.post('/', function (req, res){
-	let body = req.body.testing.replace(/(\s#\w+,?)/g, '');
-	let categories = req.body.testing.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
+	let message = Object.keys(req.body)[0]
+	let body = message.replace(/(\s#\w+,?)/g, '');
+	let categories = [];
+	if (message.match(/(?<!\w)#\w+/g) !== []) {
+		categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
+	}
 	var newTweet = new db.Tweet();
-	newTweet.creator = req.user.handle;
+	newTweet.creator = 'some_name'; //req.user.handle
 	newTweet.body = body;
 	newTweet.categories = categories;
 	newTweet.save(function(err) {
