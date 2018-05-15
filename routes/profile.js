@@ -9,7 +9,6 @@ router.get('/:id', function (req, res) {
 		if (err) { return console.log("****************ERROR*******************\n", err); }
 		// res.send({written: user.writtenTweets, purchased: user.purchasedTweets});
 		// db.Tweet.find({"_id" : {"$in" : [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]}});
-		
 		//change to _id and ObjectId
 		db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
 			if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
@@ -66,14 +65,14 @@ router.delete('/:tweet_id', function (req, res){
 router.post('/', function (req, res){
 	let message = Object.keys(req.body)[0]
 	let body = message.replace(/(\s#\w+,?)/g, '');
-	let categories = [];
-	if (message.match(/(?<!\w)#\w+/g) !== []) {
-		categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
-	}
+	// let categories = [];
+	// if (message.match(/(?<!\w)#\w+/g) !== []) {
+	// 	categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
+	// }
 	var newTweet = new db.Tweet();
 	newTweet.creator = 'some_name'; //req.user.handle
 	newTweet.body = body;
-	newTweet.categories = categories;
+	// newTweet.categories = categories;
 	newTweet.save(function(err) {
 		if (err) { return console.log('######## error saving tweet to db:\n', err); }
 	});
