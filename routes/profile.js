@@ -5,7 +5,7 @@ const db = require('../models');
 
 // view my purchased and written tweets
 router.get('/:id', function (req, res) {
-	db.User.findOne({displayName: req.params.id}, function(err, user) {
+	db.User.findOne({handle: req.params.id}, function(err, user) {
 		if (err) { return console.log("****************ERROR*******************\n", err); }
 		// res.send({written: user.writtenTweets, purchased: user.purchasedTweets});
 		// db.Tweet.find({"_id" : {"$in" : [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]}});
@@ -19,7 +19,7 @@ router.get('/:id', function (req, res) {
 				db.User.find({subscriptions: user.twitterId}, function(errorSubs, users) {
 					if (errorSubs) { return console.log("****************ERROR*******************\n", errorSubs); }
 					let followers = [];
-					users.forEach(singleUser => followers.push(singleUser.displayName));
+					users.forEach(singleUser => followers.push(singleUser.handle));
 					res.send({writtenTweets: writtenTweets, purchasedTweets: purchasedTweets, followers: followers});
 				});
 			});
@@ -49,9 +49,9 @@ router.delete('/:tweet_id', function (req, res){
 	//change to db id instead of custom id
 	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function(error, tweet) {
 		if (error) { return console.log("****************ERROR*******************\n", error); } 
-	    db.User.findOne({displayName: 'name4'}, function(err, user) { //change 'name4' to currently logged in user
+	    db.User.findOne({handle: req.user.handle}, function(err, user) {
 	    	if (err) { return console.log("****************ERROR*******************\n", err); } 
-			if (tweet.creator === 'name4') { //change 'name4' to currently logged in user
+			if (tweet.creator === req.user.handle) {
 		    	user.writtenTweets.splice(user.writtenTweets.indexOf(req.params.id), 1);
 		    	user.save();
 			} else {
@@ -59,17 +59,16 @@ router.delete('/:tweet_id', function (req, res){
 		    	user.save();
 			}
 		});
-	    res.send('deleted tweet #' + req.params.tweet_id); //change to db id instead of custom id
+	    res.send('deleted tweet #' + req.params._id); //change to db id instead of custom id
     });
 });
 
 // write new tweet
-router.post('/:tweet_id', function (req, res){ //change to route '/'
+router.post('/', function (req, res){
 	let body = req.body.testing.replace(/(\s#\w+,?)/g, '');
 	let categories = req.body.testing.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
 	var newTweet = new db.Tweet();
-	newTweet.tweet_id = req.params.tweet_id; //delete tweet_id from model
-	newTweet.creator = 'name1'; //change to currently logged in user from auth/sessions
+	newTweet.creator = req.user.handle;
 	newTweet.body = body;
 	newTweet.categories = categories;
 	newTweet.save(function(err) {

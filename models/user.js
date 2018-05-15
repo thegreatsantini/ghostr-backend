@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    accessToken: String,
-    accessTokenSecret: String,
     twitterId: String,
-    displayName: String,
+    handle: String,
+    pic: String,
     reputation: Number,
     subscriptions: [String],
     writtenTweets: [String],
-    purchasedTweets: [String]
+    purchasedTweets: [String],
 })
 
 module.exports = mongoose.model('User', userSchema);
