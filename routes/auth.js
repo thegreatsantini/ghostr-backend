@@ -19,7 +19,7 @@ router.get('/login',
 router.get('/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect(process.env.FRONTEND_URL + 'profile');
+    res.redirect(process.env.FRONTEND_URL + '/profile');
 });
 
 module.exports = router;
