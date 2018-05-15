@@ -43,7 +43,6 @@ router.get('/:id', function (req, res) {
 // 	});
 // });
 
-// TEST OUT
 // delete tweet from db
 router.delete('/:tweet_id', function (req, res){
 	//change to db id instead of custom id
@@ -81,12 +80,12 @@ router.post('/', function (req, res){
 	res.send(newTweet);
 });
 
-// populate tweet in preparation to pos to twitter
-router.get('/post/:tweet_id', function (req, res) {
-	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) {
-		res.send(tweet);
-	});
-});
+// // populate tweet in preparation to pos to twitter
+// router.get('/post/:tweet_id', function (req, res) {
+// 	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) {
+// 		res.send(tweet);
+// 	});
+// });
 
 // // post to twitter
 // router.post('/post/:tweet_id', function (req, res) {
