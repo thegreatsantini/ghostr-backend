@@ -3,8 +3,6 @@ const db = require('./models');
 
 const users_list = [
 	{
-		accessToken: 'String1',
-		accessTokenSecret: 'String1',
 		displayName: '@jingleheimer_schmit',
 		twitterId: 'TI_1',
 		reputation: 9001,
@@ -13,8 +11,6 @@ const users_list = [
 		purchasedTweets: ['2', '3']
 	},
 	{
-		accessToken: 'String2',
-		accessTokenSecret: 'String2',
 		displayName: '@jingleheimer_schmit',
 		twitterId: 'longnumber',
 		reputation: 9001,
@@ -23,8 +19,6 @@ const users_list = [
 		purchasedTweets: ['4']
 	},
 	{
-		accessToken: 'String3',
-		accessTokenSecret: 'String3',
 		displayName: 'name3',
 		twitterId: 'TI_3',
 		reputation: 3,
@@ -33,8 +27,6 @@ const users_list = [
 		purchasedTweets: ['1', '4']
 	},
 	{
-		accessToken: 'String4',
-		accessTokenSecret: 'String4',
 		displayName: 'name4',
 		twitterId: 'TI_4',
 		reputation: 4,
@@ -80,13 +72,6 @@ const tweets_list = [
 		body: 'My 4yo just said, "Daddy, why do people make up things that their children have said for social media? Isn\'t it just inherently dishonest & indicative of an inability to construct a compelling narrative themselves?',
 		categories: ['meta', '2real']
 	}
-	// {
-	// 	tweet_id: '5',
-	// 	creator: '@officialjadensmith',
-	// 	reserved: false,
-	// 	body: 'Don\'t Argue With Anyone About What Color The Sky Is',
-	// 	categories: ['blue', 'tryme']
-	// }
 ];
 
 db.User.remove({}, function (err, users) {
