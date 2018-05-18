@@ -15,16 +15,17 @@ router.get('/', function (req, res) {
 
 // view writer's channel
 router.get('/:id', function (req, res) {
-  //if currently logged in user is entered as id, redirect to /profile
   db.User.findOne({handle: req.params.id}, function (err, user) {
     if (err) { return console.log("****************ERROR*******************", err); }
-      //add logic for taking user document and checking if their id is in currently logged in user, if not or if no user is logged in, only send first 2-4 tweets and a count of rest of the tweets you could see if logged in
-      // console.log(user)
-      db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
-        if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
-        console.log(writtenTweets);
-        res.send({user: user, writtenTweets: writtenTweets});
-      });
+    // console.log('!@#!@#!@#!@#\n', req.user); // <-- error! req.user not defined in any routes except auth/user
+    // move validation/redirect logic to frontend
+    // if (req.body.user.handle === req.params.id || req.body.user.subscriptions.indexOf(req.params.id) === -1) 
+    //   { res.redirect(process.env.FRONTEND_URL + '/profile'); }
+      //add logic: instead of redirecting to profile, if i'm not subscribed to user show user's page but hide all tweets except sample tweets and let me subscribe to user
+    db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
+      if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
+      res.send({user: user, writtenTweets: writtenTweets});
+    });
   });
 });
 
@@ -44,16 +45,16 @@ router.put('/tweets/:tweet_id', function (req, res) {
 
 // subscribe/unsubscribe from writer's channel
 router.put('/:id', function (req, res) {
-  db.User.findOne({handle: 'name3'}, function(err, user) { //change 'name3' to currently logged in user
+  db.User.findOne({handle: req.body.user.handle}, function(err, user) {
     if (err) { return console.log("****************ERROR*******************", err); }
-    console.log(req.body.sub);
-    if (req.body.sub == "true") { //change to boolean instead of string?
+    if (req.body.sub === true) {
       user.subscriptions.push(req.params.id);
       user.save();
     } else {
       user.subscriptions.splice(user.subscriptions.indexOf(req.params.id), 1);
       user.save();
     }
+    console.log(user)
     res.send(user);
   });
 });
