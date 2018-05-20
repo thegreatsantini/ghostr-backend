@@ -7,7 +7,6 @@ const db = require('../models');
 router.get('/:id', function (req, res) {
 	db.User.findOne({handle: req.params.id}, function(err, user) {
 		if (err) { return console.log("****************ERROR*******************\n", err); }
-		// res.send({written: user.writtenTweets, purchased: user.purchasedTweets});
 		// db.Tweet.find({"_id" : {"$in" : [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]}});
 		//change to _id and ObjectId
 		db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
@@ -63,23 +62,27 @@ router.delete('/:tweet_id', function (req, res){
 
 // write new tweet
 router.post('/', function (req, res){
-	let message = Object.keys(req.body)[0]
+	let message = req.body.tweet;
 	let body = message.replace(/(\s#\w+,?)/g, '');
-	// let categories = [];
-	// if (message.match(/(?<!\w)#\w+/g) !== []) {
-	// 	categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
-	// }
-	var newTweet = new db.Tweet();
-	newTweet.creator = 'some_name'; //req.user.handle
+	let categories = [];
+	if (message.match(/(?<!\w)#\w+/g) !== null) {
+		categories = message.match(/(?<!\w)#\w+/g).map(word => word = word.replace(/#/, ''));
+	}
+	let newTweet = new db.Tweet();
+	newTweet.creator = req.body.writer.handle;
 	newTweet.body = body;
-	// newTweet.categories = categories;
+	newTweet.categories = categories;
 	newTweet.save(function(err) {
 		if (err) { return console.log('######## error saving tweet to db:\n', err); }
+	});
+	db.User.findOne({handle: req.body.writer.handle}, function (err, user) {
+		user.writtenTweets.push(newTweet._id);
+		user.save();
 	});
 	res.send(newTweet);
 });
 
-// // populate tweet in preparation to pos to twitter
+// // populate tweet in preparation to post to twitter
 // router.get('/post/:tweet_id', function (req, res) {
 // 	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) {
 // 		res.send(tweet);

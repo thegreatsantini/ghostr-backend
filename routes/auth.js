@@ -7,7 +7,16 @@ const db = require('../models');
 // This route checks for the existence of a user in the session
 router.get('/user', (req, res, next) => {
 	console.log('user is ', req.user);
-	res.json({ user: req.user });
+	if (req.user === undefined) { res.json({user: req.user}); return console.log('No user logged in.'); }
+	db.Tweet.find({"_id" : {"$in" : req.user.writtenTweets}}, function(errorWritten, writtenTweets) { 
+		if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
+		db.Tweet.find({"_id" : {"$in" : req.user.purchasedTweets}}, function(errorPurchased, purchasedTweets) {
+			//change to _id and ObjectId 
+			if (errorPurchased) { return console.log("****************ERROR*******************\n", errorPurchased); }
+			res.json({user: req.user, writtenTweets: writtenTweets, purchasedTweets: purchasedTweets});
+		});
+	});
+	// res.json({ user: req.user });
 });
 
 router.get('/logout', function(req, res) {

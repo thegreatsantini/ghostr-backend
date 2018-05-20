@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const cors = require('cors');
 const db = require('../models');
 
 
@@ -8,7 +7,7 @@ const db = require('../models');
 router.get('/', function (req, res) {
   db.User.find(function (err, users) {
     if (err) { return console.log("****************ERROR*******************", err); }
-    console.log(users);
+    // console.log(users);
     res.send(users);
   });
 });
@@ -31,16 +30,16 @@ router.get('/:id', function (req, res) {
 
 // mark tweet as reserved/hidden on writers db and add it to logged in users db
 router.put('/tweets/:tweet_id', function (req, res) {
-  db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) { //change tweet_id to _id
-    if (err) { return console.log("****************ERROR*******************", err); }
-    tweet.reserved = true;
-    tweet.save();
-    db.User.findOne({handle: 'name3'}, function(error, user) { //change to currently logged in user
+  // db.Tweet.findOne({tweet_id: req.params.tweet_id}, function (err, tweet) { //change tweet_id to _id
+    // if (err) { return console.log("****************ERROR*******************", err); }
+    // tweet.reserved = true;
+    // tweet.save();
+    db.User.findOne({handle: req.body.user.handle}, function(error, user) {
       if (error) { return console.log("****************ERROR*******************", error); }
-      user.purchasedTweets.push(req.params.tweet_id) //change tweet_id to _id
+      user.purchasedTweets.push(req.params.tweet_id)
       user.save();
     });
-  });
+  // });
 });
 
 // subscribe/unsubscribe from writer's channel

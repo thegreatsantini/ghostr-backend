@@ -35,6 +35,11 @@ app.use(expressSession({
 app.use(passportConfig.initialize());
 app.use(passportConfig.session());
 
+// app.use(function(req, res, next){
+// 	if (req.user !== undefined) { res.locals.currentUser = req.user; }
+// 	next();
+// });
+
 
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
