@@ -20,8 +20,9 @@ passport.use(new Strategy({
           return done(err);
         if (user) {
           // if a user is found, log them in
-          console.log("Logging In: About to call done in the passport strategy")
-          user.reputation = Math.floor(profile._json.followers_count / profile._json.statuses_count);
+          console.log("Logging In: About to call done in the passport strategy");
+          // console.log(profile);
+          user.reputation = Math.floor((profile._json.followers_count+1) * (profile._json.friends_count+1) / (profile._json.statuses_count+1));
           user.save(function(err) {
             if (err)
               throw err;

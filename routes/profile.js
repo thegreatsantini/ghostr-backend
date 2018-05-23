@@ -3,27 +3,24 @@ var router = express.Router();
 const db = require('../models');
 
 
-// view my purchased and written tweets
-router.get('/:id', function (req, res) {
-	db.User.findOne({handle: req.params.id}, function(err, user) {
-		if (err) { return console.log("****************ERROR*******************\n", err); }
-		// db.Tweet.find({"_id" : {"$in" : [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]}});
-		//change to _id and ObjectId
-		db.Tweet.find({"tweet_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
-			if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
-			db.Tweet.find({"tweet_id" : {"$in" : user.purchasedTweets}}, function(errorPurchased, purchasedTweets) {
-				//change to _id and ObjectId 
-				if (errorPurchased) { return console.log("****************ERROR*******************\n", errorPurchased); }
-				db.User.find({subscriptions: user.twitterId}, function(errorSubs, users) {
-					if (errorSubs) { return console.log("****************ERROR*******************\n", errorSubs); }
-					let followers = [];
-					users.forEach(singleUser => followers.push(singleUser.handle));
-					res.send({writtenTweets: writtenTweets, purchasedTweets: purchasedTweets, followers: followers});
-				});
-			});
-		});
-	});
-});
+// // view my purchased and written tweets
+// router.get('/:id', function (req, res) {
+// 	db.User.findOne({handle: req.params.id}, function(err, user) {
+// 		if (err) { return console.log("****************ERROR*******************\n", err); }
+// 		db.Tweet.find({"_id" : {"$in" : user.writtenTweets}}, function(errorWritten, writtenTweets) { 
+// 			if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
+// 			db.Tweet.find({"_id" : {"$in" : user.purchasedTweets}}, function(errorPurchased, purchasedTweets) {
+// 				if (errorPurchased) { return console.log("****************ERROR*******************\n", errorPurchased); }
+// 				db.User.find({subscriptions: user.twitterId}, function(errorSubs, users) {
+// 					if (errorSubs) { return console.log("****************ERROR*******************\n", errorSubs); }
+// 					let followers = [];
+// 					users.forEach(singleUser => followers.push(singleUser.handle));
+// 					res.send({writtenTweets: writtenTweets, purchasedTweets: purchasedTweets, followers: followers});
+// 				});
+// 			});
+// 		});
+// 	});
+// });
 
 // // edit tweet
 // router.put('/:tweet_id', function (req, res, next) {
@@ -43,20 +40,19 @@ router.get('/:id', function (req, res) {
 
 // delete tweet from db
 router.delete('/:tweet_id', function (req, res){
-	//change to db id instead of custom id
-	db.Tweet.findOne({tweet_id: req.params.tweet_id}, function(error, tweet) {
+	db.Tweet.findOne({_id: req.params.tweet_id}, function(error, tweet) {
 		if (error) { return console.log("****************ERROR*******************\n", error); } 
-	    db.User.findOne({handle: req.user.handle}, function(err, user) {
+	    db.User.findOne({handle: req.body.writer.handle}, function(err, user) {
 	    	if (err) { return console.log("****************ERROR*******************\n", err); } 
-			if (tweet.creator === req.user.handle) {
-		    	user.writtenTweets.splice(user.writtenTweets.indexOf(req.params.id), 1);
+			if (tweet.creator === req.body.writer.handle) {
+		    	user.writtenTweets.splice(user.writtenTweets.indexOf(req.params.tweet_id), 1);
 		    	user.save();
 			} else {
-				user.purchasedTweets.splice(user.purchasedTweets.indexOf(req.params.id), 1);
+				user.purchasedTweets.splice(user.purchasedTweets.indexOf(req.params.tweet_id), 1);
 		    	user.save();
 			}
 		});
-	    res.send('deleted tweet #' + req.params._id); //change to db id instead of custom id
+	    res.send('deleted tweet #' + req.params.tweet_id); //change to db id instead of custom id
     });
 });
 
