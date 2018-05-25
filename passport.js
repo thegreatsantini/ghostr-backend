@@ -12,7 +12,7 @@ passport.use(new Strategy({
     callbackURL: process.env.BASE_URL + '/auth/return'
   },
     function(accessToken, tokenSecret, profile, done) {
-      console.log('profile:\n', profile)
+      // console.log('profile:\n', profile)
       
       // Find or save the profile
       db.User.findOne({ 'twitterId' : profile.id }, function(err, user) {
@@ -20,12 +20,17 @@ passport.use(new Strategy({
           return done(err);
         if (user) {
           // if a user is found, log them in
-          console.log("Logging In: About to call done in the passport strategy")
-          // console.log(user)
-          return done(null, user);
+          console.log("Logging In: About to call done in the passport strategy");
+          // console.log(profile);
+          user.reputation = Math.floor((profile._json.followers_count+1) * (profile._json.friends_count+1) / (profile._json.statuses_count+1));
+          user.save(function(err) {
+            if (err)
+              throw err;
+            return done(null, user);
+          });
         } else {
-          // if the user isnt in our database, create a new user
-          var newUser = new db.User();
+          // if the user isn't in our database, create a new user
+          let newUser = new db.User();
           // set all of the relevant information
           newUser.twitterId   = profile.id;
           newUser.handle = profile.username;
@@ -44,19 +49,19 @@ passport.use(new Strategy({
 // Configure Passport authenticated session persistence.
 // In order to restore authentication state across HTTP requests, Passport needs to serialize users into and deserialize users out of the session. this is as simple as supplying the user ID when serializing, and querying the user record by ID from the database when deserializing.
 passport.serializeUser(function(user, done) {
-  console.log('######## serializing user:\n', user);
+  // console.log('######## serializing user:\n', user);
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('####### deserializing user!');
+  // console.log('####### deserializing user!');
   db.User.findById(id, function(err, user) {
-    console.log('deserialize callback func:', err, user);
+    // console.log('deserialize callback func:', err, user);
     if (err) { 
-      console.log('########## error deserializing user:\n', err);
+      // console.log('########## error deserializing user:\n', err);
       done(err, null);
     }
-    console.log('######## Success deserialize:\n', user);
+    // console.log('######## Success deserialize:\n', user);
     done(null, user);
 
   });
