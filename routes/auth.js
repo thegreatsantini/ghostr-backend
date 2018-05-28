@@ -13,7 +13,7 @@ router.get('/user', (req, res, next) => {
 		db.Tweet.find({"_id" : {"$in" : req.user.purchasedTweets}}, function(errorPurchased, purchasedTweets) {
 			if (errorPurchased) { return console.log("****************ERROR*******************\n", errorPurchased); }
 			// res.json({user: req.user, writtenTweets: writtenTweets, purchasedTweets: purchasedTweets});
-			db.User.find({subscriptions: user.twitterId}, function(errorSubs, users) {
+			db.User.find({subscriptions: req.user.twitterId}, function(errorSubs, users) {
 				if (errorSubs) { return console.log("****************ERROR*******************\n", errorSubs); }
 				let followers = [];
 				users.forEach(singleUser => followers.push(singleUser.handle));
