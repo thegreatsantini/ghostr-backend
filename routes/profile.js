@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 
+// var authorized = require('../middleware/auth.service');
+// var isLoggedIn     = require('../middleware/isLoggedIn');
 
 // // view my purchased and written tweets
 // router.get('/:id', function (req, res) {
@@ -58,6 +60,7 @@ router.delete('/:tweet_id', function (req, res){
 
 // write new tweet
 router.post('/', function (req, res){
+	console.log('%%%%%%%%%%%%%%%%%% req.user:\n' + req.user);
 	let message = req.body.tweet;
 	let body = message.replace(/(\s#\w+,?)/g, '');
 	let categories = [];

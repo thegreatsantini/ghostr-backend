@@ -3,7 +3,7 @@ var express  = require('express');
 var passport = require('passport');
 var Strategy = require('passport-twitter').Strategy;
 var db = require('./models');
-var app = express();
+
 
 passport.use(new Strategy({
     consumerKey: process.env.TWITTER_KEY,
