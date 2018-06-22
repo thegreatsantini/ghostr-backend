@@ -6,7 +6,8 @@ const db = require('../models');
 
 // This route checks for the existence of a user in the session
 router.get('/user', (req, res, next) => {
-	// console.log('user is ', req.user);
+	// console.log('$$$$$$$$$$$$$$$$$$ res.locals.currentUser:\n' + res.locals.currentUser);
+	// console.log('user is ', req.user.handle);
 	if (req.user === undefined) { res.json({user: req.user}); return console.log('No user logged in.'); }
 	db.Tweet.find({"_id" : {"$in" : req.user.writtenTweets}}, function(errorWritten, writtenTweets) { 
 		if (errorWritten) { return console.log("****************ERROR*******************\n", errorWritten); }
@@ -23,18 +24,37 @@ router.get('/user', (req, res, next) => {
 	});
 });
 
+router.get('/login', passport.authenticate('twitter', 
+	{session: true, 
+	 successRedirect: process.env.FRONTEND_URL + '/profile', 
+	 failureRedirect: process.env.FRONTEND_URL,
+	 failureFlash: true,
+	 successFlash: 'Welcome!' }));
+
+// router.get('/login', function(req, res, next) {
+//   passport.authenticate('twitter', function(err, user, info) {
+// 	if (err) { return next(err); }
+//     if (!user) { return res.redirect(process.env.FRONTEND_URL); }
+//     req.logIn(user, function(err) {
+//       if (err) { return next(err); }
+//       	req.user = user;
+// 		req.session.save(function(){
+// 			return res.redirect(process.env.FRONTEND_URL + '/profile');
+// 		});
+//       // return res.redirect(process.env.FRONTEND_URL + '/profile');
+//     });
+//   })(req, res, next);
+// });
+
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect(process.env.FRONTEND_URL + '/');
 });
-
-router.get('/login',
-  passport.authenticate('twitter', { session: true }));
 
 router.get('/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect(process.env.FRONTEND_URL + '/profile');
+    res.redirect(`${process.env.FRONTEND_URL}/user/${req.user.handle}`);
 });
 
 module.exports = router;
