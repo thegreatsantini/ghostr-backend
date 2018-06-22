@@ -54,7 +54,7 @@ router.get('/logout', function(req, res) {
 router.get('/return', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect(process.env.FRONTEND_URL + '/profile');
+    res.redirect(`${process.env.FRONTEND_URL}/user/${req.user.handle}`);
 });
 
 module.exports = router;

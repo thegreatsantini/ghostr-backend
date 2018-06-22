@@ -38,11 +38,11 @@ app.use(expressSession({
 app.use(passportConfig.initialize());
 app.use(passportConfig.session());
 
-app.use(function(req, res, next){
-	res.locals.currentUser = req.user;
-	res.locals.alerts = req.flash();
-	next();
-});
+// app.use(function(req, res, next){
+// 	res.locals.currentUser = req.user;
+// 	res.locals.alerts = req.flash();
+// 	next();
+// });
 
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
