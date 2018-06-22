@@ -6,6 +6,8 @@ var morgan         = require('morgan');
 var path           = require('path');
 var cors           = require('cors');
 var expressSession = require('express-session');
+// var flash          = require('connect-flash');
+// var isLoggedIn     = require('./middleware/isLoggedIn');
 var passportConfig = require('./passport');
 var db             = require('./models');
 var usersRouter    = require('./routes/users');
@@ -24,20 +26,23 @@ app.use(cors({
 	credentials: true,
 	exposedHeaders: ['x-auth-token']
 }));
-// app.use(expressSession({ 
-// 	secret: process.env.SESSION_SECRET
-// 	,resave: true 
-// 	,saveUninitialized: true
-// }));
+
 app.use(expressSession({ 
 	secret: process.env.SESSION_SECRET
-	,resave: false 
-	,saveUninitialized: false
+	,resave: false //default is: true
+	,saveUninitialized: false //default is: true
 	,cookie: {maxAge: 1000*60*60*24*7}
 }));
+
+// app.use(flash());
 app.use(passportConfig.initialize());
 app.use(passportConfig.session());
 
+app.use(function(req, res, next){
+	res.locals.currentUser = req.user;
+	res.locals.alerts = req.flash();
+	next();
+});
 
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);

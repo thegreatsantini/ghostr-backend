@@ -57,8 +57,4 @@ router.get('/return',
     res.redirect(process.env.FRONTEND_URL + '/profile');
 });
 
-// router.get('/testing', function(req, res) {
-// 	res.send(req.user.handle);
-// })
-
 module.exports = router;
